@@ -21,7 +21,7 @@ class CameraFragment : Fragment() {
         var view = inflater.inflate(R.layout.camera_fragment, container, false)
         
         val camera = view.findViewById<CameraView>(R.id.cameraView)
-        camera.setLifecycleOwner(viewLifecycleOwner);
+        camera.setLifecycleOwner(viewLifecycleOwner)
 
 
 
