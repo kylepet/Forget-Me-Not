@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,19 +12,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import com.otaliastudios.cameraview.CameraListener
-import com.shs.forgetmenot.ui.camera.CameraFragment
-import com.otaliastudios.cameraview.CameraView
-import com.otaliastudios.cameraview.PictureResult
-import com.otaliastudios.cameraview.VideoResult
-import com.otaliastudios.cameraview.frame.Frame
-import com.otaliastudios.cameraview.frame.FrameProcessor
-import androidx.core.view.ViewCompat.getRotation
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceContour
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
+import com.otaliastudios.cameraview.CameraListener
+import com.otaliastudios.cameraview.CameraView
+import com.otaliastudios.cameraview.PictureResult
+import com.otaliastudios.cameraview.VideoResult
+import com.otaliastudios.cameraview.frame.Frame
+import com.otaliastudios.cameraview.frame.FrameProcessor
 
 
 class CameraFragment : Fragment() {
@@ -34,7 +31,10 @@ class CameraFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?):View? {
 
         var view = inflater.inflate(R.layout.camera_fragment, container, false)
-        
+
+        var speech = Speech(activity, this::receiveName)
+        speech.startListening()
+
         val camera = view.findViewById<CameraView>(R.id.cameraView)
         val faceOverlay = view.findViewById<ImageView>(R.id.faceOverlay)
 
@@ -196,6 +196,10 @@ class CameraFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         
+    }
+
+    fun receiveName(name: String) {
+
     }
     
 
