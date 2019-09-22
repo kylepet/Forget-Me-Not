@@ -1,27 +1,12 @@
 package com.shs.forgetmenot
 
-import android.graphics.Insets.add
 import android.os.Bundle
-import android.text.TextUtils.replace
 import android.view.MenuItem
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import kotlinx.android.synthetic.main.activity_main.*
-
-
-
-
-
-
-
-
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class MainActivity : AppCompatActivity() {
