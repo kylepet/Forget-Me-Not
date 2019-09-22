@@ -61,55 +61,52 @@ class CameraFragment : Fragment() {
 
         camera.setLifecycleOwner(viewLifecycleOwner)
 
-        camera.addFrameProcessor(object : FrameProcessor{
-            override fun process(frame: Frame) {
-                val data = frame.data
-                val rotation = frame.rotation
-                val time = frame.time
-                val size = frame.size
-                val format = frame.format
-                val width = frame.size.width
-                val height = frame.size.height
-                val metadata = FirebaseVisionImageMetadata.Builder()
-                    .setWidth(width)
-                    .setHeight(height)
-                    .setFormat(FirebaseVisionImageMetadata.IMAGE_FORMAT_NV21)
-                    .setRotation(ROTATION_90)
-                    .build()
-                val firebaseVisionImage = FirebaseVisionImage.fromByteArray(frame.data, metadata)
-                val options = FirebaseVisionFaceDetectorOptions.Builder().enableTracking().build()
-                val faceDetector = FirebaseVision.getInstance().getVisionFaceDetector(options)
-                faceDetector.detectInImage(firebaseVisionImage)
-                    .addOnSuccessListener {
-                        faceOverlay.setImageBitmap(null)
-                        val bitmap = Bitmap.createBitmap(height, width, Bitmap.Config.ARGB_8888)
-                        val canvas = Canvas(bitmap)
-                        val dotPaint = Paint()
-                        dotPaint.color = Color.RED
-                        dotPaint.style = Paint.Style.STROKE
-                        dotPaint.strokeWidth = 4F
-                        val linePaint = Paint()
-                        linePaint.color = Color.GREEN
-                        linePaint.style = Paint.Style.STROKE
-                        linePaint.strokeWidth = 2F
-                        Log.v("Hello", "Message")
-                        Log.v("Faces", it.size.toString())
-                        for (face in it) {
-                            faces = it
-                            val bounds = face.boundingBox
-                            val rotY = face.headEulerAngleY // Head is rotated to the right rotY degrees
-                            val rotZ = face.headEulerAngleZ // Head is tilted sideways rotZ degrees
-                            canvas.drawRect(bounds, dotPaint)
-                            if (face.trackingId != FirebaseVisionFace.INVALID_ID) {
-                                val id = face.trackingId
-                            }
+        camera.addFrameProcessor { frame ->
+            val data = frame.data
+            val rotation = frame.rotation
+            val time = frame.time
+            val size = frame.size
+            val format = frame.format
+            val width = frame.size.width
+            val height = frame.size.height
+            val metadata = FirebaseVisionImageMetadata.Builder()
+                .setWidth(width)
+                .setHeight(height)
+                .setFormat(FirebaseVisionImageMetadata.IMAGE_FORMAT_NV21)
+                .setRotation(ROTATION_90)
+                .build()
+            val firebaseVisionImage = FirebaseVisionImage.fromByteArray(frame.data, metadata)
+            val options = FirebaseVisionFaceDetectorOptions.Builder().enableTracking().build()
+            val faceDetector = FirebaseVision.getInstance().getVisionFaceDetector(options)
+            faceDetector.detectInImage(firebaseVisionImage)
+                .addOnSuccessListener {
+                    faceOverlay.setImageBitmap(null)
+                    val bitmap = Bitmap.createBitmap(height, width, Bitmap.Config.ARGB_8888)
+                    val canvas = Canvas(bitmap)
+                    val dotPaint = Paint()
+                    dotPaint.color = Color.RED
+                    dotPaint.style = Paint.Style.STROKE
+                    dotPaint.strokeWidth = 4F
+                    val linePaint = Paint()
+                    linePaint.color = Color.GREEN
+                    linePaint.style = Paint.Style.STROKE
+                    linePaint.strokeWidth = 2F
+                    Log.v("Hello", "Message")
+                    Log.v("Faces", it.size.toString())
+                    for (face in it) {
+                        faces = it
+                        val bounds = face.boundingBox
+                        val rotY = face.headEulerAngleY // Head is rotated to the right rotY degrees
+                        val rotZ = face.headEulerAngleZ // Head is tilted sideways rotZ degrees
+                        canvas.drawRect(bounds, dotPaint)
+                        if (face.trackingId != FirebaseVisionFace.INVALID_ID) {
+                            val id = face.trackingId
                         }
-                        Log.v("Face Recognition", "Success")
-                        faceOverlay.setImageBitmap(bitmap)
                     }
-            }
-
-        })
+                    Log.v("Face Recognition", "Success")
+                    faceOverlay.setImageBitmap(bitmap)
+                }
+        }
         camera.addCameraListener(object : CameraListener() {
             override fun  onPictureTaken(result: PictureResult) {
                 // A Picture was taken!

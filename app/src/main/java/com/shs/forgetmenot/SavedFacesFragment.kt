@@ -1,5 +1,7 @@
 package com.shs.forgetmenot
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,45 +32,36 @@ class SavedFacesFragment : Fragment() {
         faceList.adapter = fastAdapter
 
 
+        var person = FaceListItem()
+
+        person.withName("Tony").withFamCon("Daddy").withPic(
+            BitmapFactory.decodeResource(context?.resources,
+                R.drawable.tony))
+
 
          //set the items to your ItemAdapter
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
-        itemAdapter.add(FaceListItem())
+        itemAdapter.add(person)
+        itemAdapter.add(person)
+        itemAdapter.add(person)
+        itemAdapter.add(person)
+        itemAdapter.add(person)
+        itemAdapter.add(person)
+        itemAdapter.add(person)
+        itemAdapter.add(person)
+        itemAdapter.add(person)
+        itemAdapter.add(person)
+        itemAdapter.add(person)
+        itemAdapter.add(person)
+        itemAdapter.add(person)
+        itemAdapter.add(person)
+        itemAdapter.add(person)
+        itemAdapter.add(person)
+        itemAdapter.add(person)
+        itemAdapter.add(person)
+        itemAdapter.add(person)
+        itemAdapter.add(person)
+
+
 
 
 
