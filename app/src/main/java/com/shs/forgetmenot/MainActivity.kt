@@ -15,9 +15,19 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 
+
+
+
+
+
+
+
+
+
 class MainActivity : AppCompatActivity() {
 
     val cameraFrag = CameraFragment()
+    val faceListFrag = SavedFacesFragment()
 
     private val mOnNavigationItemSelectedListener = object : BottomNavigationView.OnNavigationItemSelectedListener {
         override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -25,8 +35,7 @@ class MainActivity : AppCompatActivity() {
 
             when (item.itemId) {
                 R.id.navigation_home -> {
-                    //replaceFragment(cameraFrag, R.id.nav_host_fragment)
-
+                    replaceFragment(faceListFrag, R.id.nav_host_fragment)
 
                     return true
                 }
@@ -60,14 +69,18 @@ class MainActivity : AppCompatActivity() {
 
     inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
         val fragmentTransaction = beginTransaction()
+
+
         fragmentTransaction.func()
         fragmentTransaction.commit()
     }
 
 
     fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int){
+
         supportFragmentManager.inTransaction { add(frameId, fragment) }
     }
+
 
 
     fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
