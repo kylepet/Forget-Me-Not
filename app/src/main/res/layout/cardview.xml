@@ -30,7 +30,7 @@
 
             <com.mikhaellopez.circularimageview.CircularImageView
 
-                android:id="@+id/picture"
+                android:id="@+id/contactPicture"
                 android:layout_width="68dp"
                 android:layout_height="68dp"
                 android:elevation="8dp"
@@ -53,7 +53,7 @@
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintHorizontal_bias="0.039"
-                card_view:layout_constraintStart_toEndOf="@+id/picture"
+                card_view:layout_constraintStart_toEndOf="@+id/contactPicture"
                 card_view:layout_constraintTop_toTopOf="parent"
                 card_view:layout_constraintVertical_bias="0.204" />
 
@@ -66,7 +66,7 @@
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintHorizontal_bias="0.065"
-                card_view:layout_constraintStart_toEndOf="@+id/picture"
+                card_view:layout_constraintStart_toEndOf="@+id/contactPicture"
                 card_view:layout_constraintTop_toTopOf="parent" />
 
 

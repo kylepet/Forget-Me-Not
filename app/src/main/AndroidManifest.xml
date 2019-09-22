@@ -15,7 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SavedFacesFragment"></activity>
+        <activity
+            android:name=".ui.AddPerson"
+            android:label="@string/title_activity_add_person"
+            android:windowSoftInputMode="adjustPan|adjustResize"/>
+        <activity android:name=".SavedFacesFragment" />
         <activity android:name=".CameraFragment" />
 
         <meta-data
