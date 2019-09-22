@@ -77,7 +77,7 @@ class SavedFacesFragment : Fragment() {
 
 
 
-        person.withName("Tony").withFamCon("Daddy").withPic(
+        person.withName("Kyle").withFamCon("Brother").withPic(
             BitmapFactory.decodeResource(context?.resources,
                 R.drawable.tony))
 
