@@ -65,6 +65,7 @@ dependencies {
     //The tiny Materialize library used for its useful helper classes
     implementation 'com.mikepenz:materialize:1.2.1' // at least 1.2.0
 
+    implementation 'com.mikhaellopez:circularimageview:4.0.2'
 }
 
 apply plugin: 'com.google.gms.google-services'
