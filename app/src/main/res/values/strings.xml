@@ -5,4 +5,6 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_saved_faces">Saved Faces</string>
     <string name="Settings">Settings</string>
+    <string name="title_activity_add_person">Save New Person</string>
+    <string name="title_activity_show_contact_info">ShowContactInfo</string>
 </resources>
