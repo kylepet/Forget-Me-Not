@@ -1,5 +1,8 @@
 package com.shs.forgetmenot
 
+import android.app.Application
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.shs.forgetmenot.ui.AddPerson
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
             when (item.itemId) {
                 R.id.navigation_home -> {
-                    replaceFragment(faceListFrag, R.id.nav_host_fragment)
+                    replaceFragment(SavedFacesFragment(), R.id.nav_host_fragment)
 
                     return true
                 }
@@ -28,8 +32,8 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(cameraFrag, R.id.nav_host_fragment)
                     return true
                 }
-                R.id.navigation_notifications -> {
-                    //replaceFragment(cameraFrag, R.id.nav_host_fragment)
+                R.id.navigation_settings -> {
+                    startActivity(Intent(applicationContext, AddPerson::class.java))
                     return true
                 }
             }
