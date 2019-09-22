@@ -27,7 +27,7 @@ import com.otaliastudios.cameraview.frame.FrameProcessor
 import com.shs.forgetmenot.ui.savedfaces.SavedFacesFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class savedFacesFragment : Fragment() {
+class SavedFacesFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.saved_faces_fragment, container, false)
