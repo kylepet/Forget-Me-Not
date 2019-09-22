@@ -1,5 +1,6 @@
 package com.shs.forgetmenot
 
+import android.app.Application
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -12,6 +13,7 @@ import android.view.Surface.ROTATION_90
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.otaliastudios.cameraview.CameraListener
 import com.shs.forgetmenot.ui.camera.CameraFragment
@@ -24,20 +26,39 @@ import androidx.core.view.ViewCompat.getRotation
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata
+import com.google.firebase.ml.vision.face.FirebaseVisionFace
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceContour
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
+import com.otaliastudios.cameraview.gesture.Gesture
 
+//TODO
+//
+//Have a place to upload people's faces
+//
+//Tap on a square to take a picture and label someone's face
+//
+//Have recognization of red squares from stored faces
+//
+//If tap on people that are already recognized, displays information about them
 
 class CameraFragment : Fragment() {
 
-    
+    var faces: List<FirebaseVisionFace>? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?):View? {
 
         var view = inflater.inflate(R.layout.camera_fragment, container, false)
         
         val camera = view.findViewById<CameraView>(R.id.cameraView)
         val faceOverlay = view.findViewById<ImageView>(R.id.faceOverlay)
-
+        faceOverlay.setOnClickListener {
+            Toast.makeText(activity, "You clicked on frame", Toast.LENGTH_SHORT).show()
+            Log.v("clicked","true")
+        }
+        camera.setOnClickListener {
+            Toast.makeText(activity, "You clicked on frame", Toast.LENGTH_SHORT).show()
+            Log.v("clickedCamera","true")
+        }
         camera.setLifecycleOwner(viewLifecycleOwner)
 
         camera.addFrameProcessor(object : FrameProcessor{
@@ -56,7 +77,7 @@ class CameraFragment : Fragment() {
                     .setRotation(ROTATION_90)
                     .build()
                 val firebaseVisionImage = FirebaseVisionImage.fromByteArray(frame.data, metadata)
-                val options = FirebaseVisionFaceDetectorOptions.Builder().setContourMode(FirebaseVisionFaceDetectorOptions.ALL_CONTOURS).build()
+                val options = FirebaseVisionFaceDetectorOptions.Builder().enableTracking().build()
                 val faceDetector = FirebaseVision.getInstance().getVisionFaceDetector(options)
                 faceDetector.detectInImage(firebaseVisionImage)
                     .addOnSuccessListener {
@@ -65,7 +86,7 @@ class CameraFragment : Fragment() {
                         val canvas = Canvas(bitmap)
                         val dotPaint = Paint()
                         dotPaint.color = Color.RED
-                        dotPaint.style = Paint.Style.FILL
+                        dotPaint.style = Paint.Style.STROKE
                         dotPaint.strokeWidth = 4F
                         val linePaint = Paint()
                         linePaint.color = Color.GREEN
@@ -74,102 +95,13 @@ class CameraFragment : Fragment() {
                         Log.v("Hello", "Message")
                         Log.v("Faces", it.size.toString())
                         for (face in it) {
-
-                            val faceContours = face.getContour(FirebaseVisionFaceContour.FACE).points
-                            for ((i, contour) in faceContours.withIndex()) {
-                                if (i != faceContours.lastIndex)
-                                    canvas.drawLine(contour.x, contour.y, faceContours[i + 1].x, faceContours[i + 1].y, linePaint)
-                                else
-                                    canvas.drawLine(contour.x, contour.y, faceContours[0].x, faceContours[0].y, linePaint)
-                                canvas.drawCircle(contour.x, contour.y, 4F, dotPaint)
-                            }
-
-                            val leftEyebrowTopContours = face.getContour(FirebaseVisionFaceContour.LEFT_EYEBROW_TOP).points
-                            for ((i, contour) in leftEyebrowTopContours.withIndex()) {
-                                if (i != leftEyebrowTopContours.lastIndex)
-                                    canvas.drawLine(contour.x, contour.y, leftEyebrowTopContours[i + 1].x, leftEyebrowTopContours[i + 1].y, linePaint)
-                                canvas.drawCircle(contour.x, contour.y, 4F, dotPaint)
-                            }
-
-                            val leftEyebrowBottomContours = face.getContour(FirebaseVisionFaceContour.LEFT_EYEBROW_BOTTOM).points
-                            for ((i, contour) in leftEyebrowBottomContours.withIndex()) {
-                                if (i != leftEyebrowBottomContours.lastIndex)
-                                    canvas.drawLine(contour.x, contour.y, leftEyebrowBottomContours[i + 1].x, leftEyebrowBottomContours[i + 1].y, linePaint)
-                                canvas.drawCircle(contour.x, contour.y, 4F, dotPaint)
-                            }
-
-                            val rightEyebrowTopContours = face.getContour(FirebaseVisionFaceContour.RIGHT_EYEBROW_TOP).points
-                            for ((i, contour) in rightEyebrowTopContours.withIndex()) {
-                                if (i != rightEyebrowTopContours.lastIndex)
-                                    canvas.drawLine(contour.x, contour.y, rightEyebrowTopContours[i + 1].x, rightEyebrowTopContours[i + 1].y, linePaint)
-                                canvas.drawCircle(contour.x, contour.y, 4F, dotPaint)
-                            }
-
-                            val rightEyebrowBottomContours = face.getContour(FirebaseVisionFaceContour.RIGHT_EYEBROW_BOTTOM).points
-                            for ((i, contour) in rightEyebrowBottomContours.withIndex()) {
-                                if (i != rightEyebrowBottomContours.lastIndex)
-                                    canvas.drawLine(contour.x, contour.y, rightEyebrowBottomContours[i + 1].x, rightEyebrowBottomContours[i + 1].y, linePaint)
-                                canvas.drawCircle(contour.x, contour.y, 4F, dotPaint)
-                            }
-
-                            val leftEyeContours = face.getContour(FirebaseVisionFaceContour.LEFT_EYE).points
-                            for ((i, contour) in leftEyeContours.withIndex()) {
-                                if (i != leftEyeContours.lastIndex)
-                                    canvas.drawLine(contour.x, contour.y, leftEyeContours[i + 1].x, leftEyeContours[i + 1].y, linePaint)
-                                else
-                                    canvas.drawLine(contour.x, contour.y, leftEyeContours[0].x, leftEyeContours[0].y, linePaint)
-                                canvas.drawCircle(contour.x, contour.y, 4F, dotPaint)
-                            }
-
-                            val rightEyeContours = face.getContour(FirebaseVisionFaceContour.RIGHT_EYE).points
-                            for ((i, contour) in rightEyeContours.withIndex()) {
-                                if (i != rightEyeContours.lastIndex)
-                                    canvas.drawLine(contour.x, contour.y, rightEyeContours[i + 1].x, rightEyeContours[i + 1].y, linePaint)
-                                else
-                                    canvas.drawLine(contour.x, contour.y, rightEyeContours[0].x, rightEyeContours[0].y, linePaint)
-                                canvas.drawCircle(contour.x, contour.y, 4F, dotPaint)
-                            }
-
-                            val upperLipTopContours = face.getContour(FirebaseVisionFaceContour.UPPER_LIP_TOP).points
-                            for ((i, contour) in upperLipTopContours.withIndex()) {
-                                if (i != upperLipTopContours.lastIndex)
-                                    canvas.drawLine(contour.x, contour.y, upperLipTopContours[i + 1].x, upperLipTopContours[i + 1].y, linePaint)
-                                canvas.drawCircle(contour.x, contour.y, 4F, dotPaint)
-                            }
-
-                            val upperLipBottomContours = face.getContour(FirebaseVisionFaceContour.UPPER_LIP_BOTTOM).points
-                            for ((i, contour) in upperLipBottomContours.withIndex()) {
-                                if (i != upperLipBottomContours.lastIndex)
-                                    canvas.drawLine(contour.x, contour.y, upperLipBottomContours[i + 1].x, upperLipBottomContours[i + 1].y, linePaint)
-                                canvas.drawCircle(contour.x, contour.y, 4F, dotPaint)
-                            }
-
-                            val lowerLipTopContours = face.getContour(FirebaseVisionFaceContour.LOWER_LIP_TOP).points
-                            for ((i, contour) in lowerLipTopContours.withIndex()) {
-                                if (i != lowerLipTopContours.lastIndex)
-                                    canvas.drawLine(contour.x, contour.y, lowerLipTopContours[i + 1].x, lowerLipTopContours[i + 1].y, linePaint)
-                                canvas.drawCircle(contour.x, contour.y, 4F, dotPaint)
-                            }
-
-                            val lowerLipBottomContours = face.getContour(FirebaseVisionFaceContour.LOWER_LIP_BOTTOM).points
-                            for ((i, contour) in lowerLipBottomContours.withIndex()) {
-                                if (i != lowerLipBottomContours.lastIndex)
-                                    canvas.drawLine(contour.x, contour.y, lowerLipBottomContours[i + 1].x, lowerLipBottomContours[i + 1].y, linePaint)
-                                canvas.drawCircle(contour.x, contour.y, 4F, dotPaint)
-                            }
-
-                            val noseBridgeContours = face.getContour(FirebaseVisionFaceContour.NOSE_BRIDGE).points
-                            for ((i, contour) in noseBridgeContours.withIndex()) {
-                                if (i != noseBridgeContours.lastIndex)
-                                    canvas.drawLine(contour.x, contour.y, noseBridgeContours[i + 1].x, noseBridgeContours[i + 1].y, linePaint)
-                                canvas.drawCircle(contour.x, contour.y, 4F, dotPaint)
-                            }
-
-                            val noseBottomContours = face.getContour(FirebaseVisionFaceContour.NOSE_BOTTOM).points
-                            for ((i, contour) in noseBottomContours.withIndex()) {
-                                if (i != noseBottomContours.lastIndex)
-                                    canvas.drawLine(contour.x, contour.y, noseBottomContours[i + 1].x, noseBottomContours[i + 1].y, linePaint)
-                                canvas.drawCircle(contour.x, contour.y, 4F, dotPaint)
+                            faces = it
+                            val bounds = face.boundingBox
+                            val rotY = face.headEulerAngleY // Head is rotated to the right rotY degrees
+                            val rotZ = face.headEulerAngleZ // Head is tilted sideways rotZ degrees
+                            canvas.drawRect(bounds, dotPaint)
+                            if (face.trackingId != FirebaseVisionFace.INVALID_ID) {
+                                val id = face.trackingId
                             }
                         }
                         Log.v("Face Recognition", "Success")
@@ -191,8 +123,9 @@ class CameraFragment : Fragment() {
         
         return view
     }
+    fun clickView() {
 
-
+    }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         
