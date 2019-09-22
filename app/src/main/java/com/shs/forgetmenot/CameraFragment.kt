@@ -51,14 +51,14 @@ class CameraFragment : Fragment() {
         
         val camera = view.findViewById<CameraView>(R.id.cameraView)
         val faceOverlay = view.findViewById<ImageView>(R.id.faceOverlay)
+
+        faceOverlay.bringToFront()
+
         faceOverlay.setOnClickListener {
-            Toast.makeText(activity, "You clicked on frame", Toast.LENGTH_SHORT).show()
-            Log.v("clicked","true")
+           Toast.makeText(activity, "You clicked on frame", Toast.LENGTH_SHORT).show()
+           Log.v("clicked","true")
         }
-        camera.setOnClickListener {
-            Toast.makeText(activity, "You clicked on frame", Toast.LENGTH_SHORT).show()
-            Log.v("clickedCamera","true")
-        }
+
         camera.setLifecycleOwner(viewLifecycleOwner)
 
         camera.addFrameProcessor(object : FrameProcessor{
@@ -123,14 +123,12 @@ class CameraFragment : Fragment() {
         
         return view
     }
-    fun clickView() {
 
-    }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         
     }
-    
+
 
 }
 

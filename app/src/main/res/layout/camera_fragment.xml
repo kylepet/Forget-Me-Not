@@ -7,6 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.camera.CameraFragment">
 
+    <ImageView
+        android:id="@+id/faceOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:elevation="1dp"
+        android:focusable="true"
+
+        />
+
     <com.otaliastudios.cameraview.CameraView
         android:id="@+id/cameraView"
         app:cameraExperimental="true"
@@ -17,17 +27,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:clickable="true"
-        android:focusable="true"
-        android:elevation="0dp">
 
-        <ImageView
-            android:id="@+id/faceOverlay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:focusable="true"
-            android:elevation="1dp"/>
+        android:elevation="0dp">
 
     </com.otaliastudios.cameraview.CameraView>
 
