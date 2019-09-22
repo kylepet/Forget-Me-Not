@@ -1,5 +1,7 @@
 package com.shs.forgetmenot
 
+import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -19,6 +21,8 @@ import android.util.Log
 import android.widget.Toast
 import com.google.gson.Gson
 import com.mikepenz.fastadapter.IAdapter
+import android.content.Intent
+import com.mikepenz.fastadapter.select.getSelectExtension
 
 
 class SavedFacesFragment : Fragment() {
@@ -29,46 +33,47 @@ class SavedFacesFragment : Fragment() {
         var faceList = view.findViewById<RecyclerView>(R.id.savedfaceslist)
 
 
-
-        //create the ItemAdapter holding your Items
         val itemAdapter = ItemAdapter<FaceListItem>()
-        //create the managing FastAdapter, by passing in the itemAdapter
+
         val fastAdapter = FastAdapter.with(itemAdapter)
 
-        faceList.layoutManager = LinearLayoutManager(activity)
-        //set adapter to the RecyclerView
-        faceList.adapter = fastAdapter
 
+
+
+        faceList.layoutManager = LinearLayoutManager(activity)
+
+
+        //set adapter to the RecyclerView
+        faceList.adapter =fastAdapter
+
+
+
+        fastAdapter.onClickListener = { view, adapter, item, position ->
+            val value = "Hello world"
+            val i = Intent(activity, ShowContactInfo::class.java)
+            i.putExtra("name", item.name)
+            Log.d("yea", "yea")
+            startActivity(i)
+            false
+        }
         var person = FaceListItem()
 
-        var people = ArrayList<FaceListItem>()
 
-        val preferences = this.activity!!.getSharedPreferences("pref", Context.MODE_PRIVATE)
 
         //Code to write people to array and save it
-           /*
+        /*
 
-            val preferences = this.activity!!.getSharedPreferences("pref", Context.MODE_PRIVATE)
-            //set variables of 'myObject', etc.
+         val preferences = this.activity!!.getSharedPreferences("pref", Context.MODE_PRIVATE)
+         //set variables of 'myObject', etc.
 
-            var prefsEditor = preferences.edit()
-            var gson = Gson()
-            var json = gson.toJson(people)
-            prefsEditor.putString("people", json)
-            prefsEditor.apply()
+         var prefsEditor = preferences.edit()
+         var gson = Gson()
+         var json = gson.toJson(people)
+         prefsEditor.putString("people", json)
+         prefsEditor.apply()
 
-            */
+         */
 
-        //Retrieve saved values
-        val gson = Gson()
-        val json = preferences.getString("people", "")
-        var temp = gson.fromJson<Any>(json, FaceListItem::class.java)
-
-
-
-        if (temp != null) {
-            people = temp as ArrayList<FaceListItem>
-        }
 
 
 
@@ -77,37 +82,13 @@ class SavedFacesFragment : Fragment() {
                 R.drawable.tony))
 
 
-        //configure our fastAdapter
-        fastAdapter.onClickListener = { v: View?, _: IAdapter<FaceListItem>, item: FaceListItem, _: Int ->
-            v?.let {
-                Toast.makeText(v.context, item.name, Toast.LENGTH_LONG).show()
-            }
-            false
-        }
-
-         //set the items to your ItemAdapter
-        itemAdapter.add(person)
-        itemAdapter.add(person)
-        itemAdapter.add(person)
-        itemAdapter.add(person)
-        itemAdapter.add(person)
-        itemAdapter.add(person)
-        itemAdapter.add(person)
-        itemAdapter.add(person)
-        itemAdapter.add(person)
-        itemAdapter.add(person)
-        itemAdapter.add(person)
-        itemAdapter.add(person)
-        itemAdapter.add(person)
-        itemAdapter.add(person)
-        itemAdapter.add(person)
-        itemAdapter.add(person)
-        itemAdapter.add(person)
-        itemAdapter.add(person)
-        itemAdapter.add(person)
-        itemAdapter.add(person)
 
 
+
+
+
+
+        itemAdapter.add(person)
 
 
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aandroid="http://schemas.android.com/apk/distribution"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.shs.forgetmenot">
 
@@ -16,9 +17,12 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".ShowContactInfo"
+            android:label="@string/title_activity_show_contact_info"></activity>
+        <activity
             android:name=".ui.AddPerson"
             android:label="@string/title_activity_add_person"
-            android:windowSoftInputMode="adjustPan|adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".SavedFacesFragment" />
         <activity android:name=".CameraFragment" />
 

@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
             when (item.itemId) {
                 R.id.navigation_home -> {
-                    replaceFragment(faceListFrag, R.id.nav_host_fragment)
+                    replaceFragment(SavedFacesFragment(), R.id.nav_host_fragment)
 
                     return true
                 }
