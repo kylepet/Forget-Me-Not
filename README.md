@@ -12,7 +12,7 @@ It recognizes and detects faces and matches it with a database of family members
 
 We used android studio to develop an application for Android. For the facial detection, we used Google's Firebase ML Kit to detect faces and for recognition on the server, we used the Eigenfaces method to compare faces to the collection of saved faces. We also added voice detection for automatic contact addition.
 
-##Challenges we ran into
+## Challenges we ran into
 
 Unfortunately, our localhost server stopped working sometime during the early morning so we weren't able to contact our server at all. Our face recognition needed our server to work as well as adding new contacts. However, given a little more time and under more ideal conditions, we can make it work.
 
